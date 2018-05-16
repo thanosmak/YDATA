@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // Login Success
             if (!isValidCredentials.isEmpty()) {
-                goToMainActivity();
+                goToHomeActivity();
             }
             // Login Failure
             else {
@@ -120,13 +120,13 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Open a new activity window.
      */
-    private void goToMainActivity() {
+    private void goToHomeActivity() {
         Bundle bundle = new Bundle();
         bundle.putString("username", username);
         bundle.putString("password", password);
         bundle.putString("baseUrl", baseUrl);
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
     }
