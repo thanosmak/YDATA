@@ -49,7 +49,8 @@ public class LoginActivity extends AppCompatActivity {
                             new ApiAuthentication(
                                     baseUrl
                                     , username
-                                    , password
+                                    , password,
+                                    LoginActivity.this
                             );
 
                     AsyncTask<Void, Void, String> execute = new ExecuteNetworkOperation(apiAuthenticationClient);

@@ -3,6 +3,8 @@ package com.example.user.ydata;
 /**
  * Created by user on 28-Apr-18.
  */
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.oreilly.servlet.Base64Encoder;
@@ -22,6 +24,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ApiAuthentication {
     private String baseUrl;
     private String username;
@@ -33,6 +37,8 @@ public class ApiAuthentication {
     private String payload;
     private HashMap<String, String> parameters;
     private Map<String, List<String>> headerFields;
+    private String YdataTokenResponse;
+    private Context context;
 
 
     /**
@@ -41,13 +47,14 @@ public class ApiAuthentication {
      * @param username String
      * @param password String
      */
-    public ApiAuthentication(String  baseUrl, String username, String password) {
+    public ApiAuthentication(String  baseUrl, String username, String password, Context context) {
         setBaseUrl(baseUrl);
         this.username = username;
         this.password = password;
         this.urlResource = "";
         this.urlPath = "";
         this.httpMethod = "GET";
+        this.context = context;
         parameters = new HashMap<>();
         lastResponse = "";
         payload = "";
@@ -108,6 +115,15 @@ public class ApiAuthentication {
      */
     public String getLastResponse() {
         return lastResponse;
+    }
+
+
+    /**
+     * Get the output from the last call made to the Rest API.
+     * @return String
+     */
+    public String getYdataTokenResponse() {
+        return YdataTokenResponse;
     }
 
     /**
@@ -267,6 +283,7 @@ public class ApiAuthentication {
                     writer.write(payload);
 
                     headerFields = connection.getHeaderFields();
+                    YdataTokenResponse = connection.getHeaderField("YdataTokenResponse");
 
                     BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     while ((line = br.readLine()) != null) {
@@ -279,7 +296,10 @@ public class ApiAuthentication {
                 InputStream content = connection.getInputStream();
 
                 headerFields = connection.getHeaderFields();
+                YdataTokenResponse = connection.getHeaderField("YdataTokenResponse");
+
                 Log.v("thanos_headers:", headerFields.toString());
+                Log.v("thanos_YdataTokenResp:", YdataTokenResponse);
                 //connection.
                 BufferedReader in = new BufferedReader(new InputStreamReader(content));
 
@@ -291,6 +311,10 @@ public class ApiAuthentication {
             e.printStackTrace();
             Log.e("thanos_error:", e.toString());
         }
+
+        SharedPreferences prefs = context.getSharedPreferences("ydata", MODE_PRIVATE);
+        prefs.edit().putString("YdataTokenResponse", getYdataTokenResponse()).apply();
+
 
         // If the outputStringBuilder is blank, the call failed.
         if (!outputStringBuilder.toString().equals("")) {
