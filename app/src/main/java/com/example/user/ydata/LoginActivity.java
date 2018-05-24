@@ -1,6 +1,7 @@
 package com.example.user.ydata;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,6 +60,31 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        Button forgotpassBtn = (Button)findViewById(R.id.ForgotPassBtn);
+        forgotpassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String google = "https://app.ydata.eu/users/forgotpassword";
+                Uri webaddress = Uri.parse(google);
+                Intent gotoGoogle = new Intent(Intent.ACTION_VIEW, webaddress);
+                if (gotoGoogle.resolveActivity(getPackageManager())!=null){
+                    startActivity(gotoGoogle);
+                }
+            }
+        });
+
+        Button secondActivityBtn = (Button)  findViewById(R.id.RegisterActivityBtn);
+        secondActivityBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(getApplicationContext(), SecondActivity.class);
+                //show how to pass information to another activity
+                startIntent.putExtra("org.mentorsxhools.quicklancher.Something","Hello World");
+                startActivity(startIntent);
+
+            }
+        });
+
     }
 
 
@@ -126,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
         bundle.putString("password", password);
         bundle.putString("baseUrl", baseUrl);
 
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, Splasscreen_Activity.class);
         intent.putExtras(bundle);
         startActivity(intent);
     }
