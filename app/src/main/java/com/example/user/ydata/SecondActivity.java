@@ -43,14 +43,21 @@ public class SecondActivity extends AppCompatActivity {
                 final String Mail = emailBox.getText().toString();
                 final String Pass = passwordBox.getText().toString();
                 final String Passcon = loginLink.getText().toString();
-
+                final boolean mobileApp;
+                if (Pass==Passcon) {
+                    mobileApp = true;
+                }
+                else {
+                    mobileApp = false;
+                }
+                //final Boolean mobileApp = Boolean.parseBoolean(checkmobileApp.getText().toString());
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
-                            boolean mobileApp = jsonResponse.getBoolean("mobileApp");
-                            if (mobileApp){
+                            boolean success = jsonResponse.getBoolean("success");
+                            if (success){
                                 Intent intent = new Intent(SecondActivity.this, LoginActivity.class);
                                 SecondActivity.this.startActivity(intent);
                             }else{
@@ -72,7 +79,7 @@ public class SecondActivity extends AppCompatActivity {
                     }
                 };
 
-                RegisterRequest registerRequest = new RegisterRequest(Mail, Pass, Passcon, responseListener);
+                RegisterRequest registerRequest = new RegisterRequest(Mail, Pass, Passcon, mobileApp, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(SecondActivity.this);
                 queue.add(registerRequest);
             }
