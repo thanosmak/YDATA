@@ -31,4 +31,5 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.mcxiaoke.volley:library:1.0.19'
     implementation 'com.airbnb.android:lottie:2.0.0'
+    //implementation 'com.github.thyrlian:AwesomeValidation:2.0'
 }
