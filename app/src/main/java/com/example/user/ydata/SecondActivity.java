@@ -2,6 +2,7 @@ package com.example.user.ydata;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -16,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -98,7 +100,11 @@ public class SecondActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InsertSV();
+                try {
+                    InsertSV();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
         });
@@ -163,13 +169,29 @@ public class SecondActivity extends AppCompatActivity {
             }*/
 
 
-    private void InsertSV() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+    private void InsertSV() throws JSONException {
+        JSONObject obj = new JSONObject();
+
+        obj.put("mobileApp",true);
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, URL, obj,
+                new Response.Listener<JSONObject>() {
+            /**
+             * Called when a response is received.
+             *
+             * @param response
+             */
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(getApplication(), (CharSequence) response, Toast.LENGTH_SHORT).show();
+            }
+/*
+            //StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getApplication(), response, Toast.LENGTH_SHORT).show();
 
             }
+            */
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -181,21 +203,18 @@ public class SecondActivity extends AppCompatActivity {
                 String Mail = emailBox.getText().toString();
                 String Pass = passwordBox.getText().toString();
                 String Passcon = passconfBox.getText().toString();
-                String mobileApp = "true";
-                boolean Passcheck = false;
-                if (Pass == Passcon) {
-                    Passcheck = true;
-                }
+                //String mobileApp = "true";
+
                 params.put("email", Mail);
                 params.put("password", Pass);
                 params.put("passwordConfirmation", Passcon);
-                params.put("mobileApp ", mobileApp );
+                //params.put("mobileApp ", mobileApp );
 
                 return params;
             }
         };
         requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        requestQueue.add(req);
     }
 }
 
