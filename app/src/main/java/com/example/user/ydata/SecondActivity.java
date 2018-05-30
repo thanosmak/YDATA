@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import static java.util.regex.Pattern.compile;
+
 public class SecondActivity extends AppCompatActivity {
     EditText emailBox, passwordBox, passconfBox;
     Button registerButton;
@@ -43,6 +45,35 @@ public class SecondActivity extends AppCompatActivity {
         final EditText passwordBox = (EditText) findViewById(R.id.passwordBox);
         final EditText passconfBox = (EditText) findViewById(R.id.passconfBox);
         final Button registerButton = (Button) findViewById(R.id.registerButton);
+        //final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+        passwordBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                Pattern PASSWORD_PATTERN
+                        = Pattern.compile(
+                        "[a-zA-Z0-9\\!\\@\\#\\$]{8,24}");
+                String pass = passwordBox.getText().toString();
+                if (
+                        //passwordBox.getText().length()<8
+                        !PASSWORD_PATTERN.matcher(pass).find()
+                        ){
+                    passwordBox.setError("Password must have at least 1 Upercase, 1 lowercase and 1 special character!");
+                }
+            }
+        });
+
+        passconfBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                String pass = passwordBox.getText().toString();
+                String passcon = passconfBox.getText().toString();
+                if (!passcon.equals(pass)
+                        ){
+                    passconfBox.setError("Password not matching");
+                }
+            }
+        });
 
         //requestQueue = Volley.newRequestQueue(this);
         /*
@@ -73,7 +104,7 @@ public class SecondActivity extends AppCompatActivity {
         });
 
     }
-    /*
+/*
     public void validatePassword(String password){
         //Pattern upperCase = Pattern.compile("[A-Z]");
         //Pattern lowerCase = Pattern.compile("[a-z]");
@@ -86,8 +117,8 @@ public class SecondActivity extends AppCompatActivity {
             passwordBox.setError("Invalid Password");
         }
     }
-    */
 
+/*/
 
 
 
@@ -167,24 +198,6 @@ public class SecondActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 }
-
-
-/*
-            request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-
-     */
-
-
-
 
 
 
