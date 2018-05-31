@@ -1,16 +1,26 @@
 package com.example.user.ydata.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.user.ydata.WatermeterDetailsActivity;
 import com.example.user.ydata.model.Waterconnection;
 import com.example.user.ydata.R ;
 
+import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,8 +44,33 @@ public class WatermeterRecyclerViewAdapter extends RecyclerView.Adapter<Watermet
         View view;
         LayoutInflater inflater = LayoutInflater.from(mContext);
         view = inflater.inflate(R.layout.watermeter_connection_item, parent, false);
+        final MyViewHolder viewHolder = new MyViewHolder(view);
+        viewHolder.view_watermeter_item_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Waterconnection waterconnection = mData.get(viewHolder.getAdapterPosition());
+                List<Waterconnection.Indications> indicationsList = waterconnection.getIndicationsList();
+                Bundle bundle = new Bundle();
 
-        return new MyViewHolder(view);
+
+                bundle.putString("deya", waterconnection.getDeya());
+                bundle.putString("pin", waterconnection.getPin());
+                bundle.putString("address", waterconnection.getAddress());
+                bundle.putString("owner", waterconnection.getOwner());
+                bundle.putString("status", waterconnection.getStatus());
+                bundle.putString("watermeter_number", waterconnection.getWatermeter().getWatermeterNumber());
+                bundle.putString("consumer_code", waterconnection.getWatermeter().getConsumerCode());
+                bundle.putString("name_on_bill", waterconnection.getWatermeter().getFullNameOnBill());
+                bundle.putSerializable("indications", (Serializable) indicationsList);
+
+                Intent i = new Intent(mContext, WatermeterDetailsActivity.class);
+                i.putExtras(bundle);
+
+                mContext.startActivity(i);
+            }
+        });
+
+        return viewHolder;
     }
 
     @Override
@@ -56,14 +91,13 @@ public class WatermeterRecyclerViewAdapter extends RecyclerView.Adapter<Watermet
         TextView watermeterDeya;
         TextView watermeterAddress;
         TextView watermeterPin;
-
-
-
+        LinearLayout view_watermeter_item_container;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
+            view_watermeter_item_container = itemView.findViewById(R.id.watermeterItemContainer);
             watermeterDeya = itemView.findViewById(R.id.watermeterDeya);
             watermeterAddress = itemView.findViewById(R.id.watermeterAddress);
             watermeterPin = itemView.findViewById(R.id.watermeterPin);

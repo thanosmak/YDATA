@@ -3,17 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
-    android:padding="12dp"
-    android:layout_marginTop="5dp"
-    android:background="@color/cardview_light_background"
-    android:id="@+id/watermeterItemContainer">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:padding="8dp"
+    android:background="#fff">
 
     <ImageView
-        android:layout_width="100dp"
+        android:layout_width="50dp"
+        android:layout_marginRight="8dp"
         android:layout_height="match_parent"
         android:background="#ffffff"
-        android:src="@drawable/ic_invert_colors_black_24dp"/>
+        android:src="@drawable/ic_data_usage_blue_24dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,25 +22,34 @@
         android:paddingTop="8dp">
 
         <TextView
-            android:id="@+id/watermeterDeya"
+            android:id="@+id/newIndicationDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Water Meter Name"
+            android:text="newIndicationDate"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/watermeterAddress"
+            android:id="@+id/usage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Address: Ion. Kessarias 2"
+            android:text="usage"
             android:textSize="16sp"/>
 
         <TextView
-            android:id="@+id/watermeterPin"
+            android:id="@+id/newIndication"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pin: 231231"
+            android:text="newIndication"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/cubicCharged"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cubicCharged"
             android:textSize="16sp" />
     </LinearLayout>
+
+
 </LinearLayout>

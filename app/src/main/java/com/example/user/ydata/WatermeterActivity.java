@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -40,15 +41,18 @@ public class WatermeterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watermeter);
 
+        // Get YdataTokenResponse to be used in future request calls
         SharedPreferences prefs = getSharedPreferences("ydata", MODE_PRIVATE);
         YdataTokenResponse = prefs.getString("YdataTokenResponse", "");
 
         waterconnectionList = new ArrayList<>();
         recyclerView = findViewById(R.id.watermeterRecyclerView);
-        jsonrequest();
+
+        getWatermetersRequest();
     }
 
-    private void jsonrequest() {
+    // Makes request to get all watermeters
+    private void getWatermetersRequest() {
 
         request = new JsonArrayRequest(Request.Method.GET, JSON_URL, null,
             new Response.Listener<JSONArray>() {
@@ -115,7 +119,7 @@ public class WatermeterActivity extends AppCompatActivity {
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
+                    Log.e("watermeter request err:", String.valueOf(error));
                 }
             }) {
                 @Override
@@ -125,7 +129,6 @@ public class WatermeterActivity extends AppCompatActivity {
                     return headers;
                 }
         };
-
 
         requestQueue = Volley.newRequestQueue(WatermeterActivity.this);
         requestQueue.add(request);

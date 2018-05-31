@@ -1,12 +1,13 @@
 package com.example.user.ydata.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by makar on 17/5/2018.
  */
 
-public class Waterconnection {
+public class Waterconnection implements Serializable {
 
     private String deya;
     private String pin;
@@ -90,7 +91,7 @@ public class Waterconnection {
     }
 
     // Watermeter class with getters and setters
-    public static class Watermeter {
+    public static class Watermeter implements Serializable {
         private String watermeterPin;
         private String watermeterNumber;
         private String consumerCode;
@@ -148,7 +149,7 @@ public class Waterconnection {
     }
 
     // Indications class with getters and setters
-    public static class Indications {
+    public static class Indications implements Serializable {
         private String usage;
         private String newIndication;
         private String newIndicationDate;
