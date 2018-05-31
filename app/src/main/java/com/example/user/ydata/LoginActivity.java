@@ -154,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
         bundle.putString("password", password);
         bundle.putString("baseUrl", baseUrl);
 
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, Splasscreen_Activity.class);
         intent.putExtras(bundle);
         startActivity(intent);
     }
