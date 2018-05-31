@@ -148,7 +148,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="28dp"
                 android:background="@drawable/button_style"
-                android:text="Check latest movements"
+                android:text="Τελευταiες 5 δηλωσεις καταναλωσης"
                 android:textColor="#ffffff" />
 
             <Button
@@ -159,7 +159,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="18dp"
                 android:background="@drawable/button_style"
-                android:text="View bills"
+                android:text="Προβολη λογαριασμων"
                 android:textColor="#ffffff" />
 
         </LinearLayout>

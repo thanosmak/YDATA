@@ -26,7 +26,8 @@
         <activity android:name=".LastMovesActivity" />
         <activity android:name=".BillsActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".WatermeterDetailsActivity"></activity>
+        <activity android:name=".WatermeterDetailsActivity" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>

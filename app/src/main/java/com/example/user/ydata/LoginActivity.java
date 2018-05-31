@@ -1,6 +1,7 @@
 package com.example.user.ydata;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button loginButton;
+    Button loginButton, forgotpassBtn, registerButton;
     ProgressBar loginProgress;
     private EditText login_username;
     private EditText login_password;
@@ -60,6 +61,32 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        forgotpassBtn = findViewById(R.id.ForgotPassBtn);
+        forgotpassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String google = "https://app.ydata.eu/users/forgotpassword";
+                Uri webaddress = Uri.parse(google);
+                Intent gotoGoogle = new Intent(Intent.ACTION_VIEW, webaddress);
+                if (gotoGoogle.resolveActivity(getPackageManager())!=null){
+                    startActivity(gotoGoogle);
+                }
+            }
+        });
+
+        registerButton = findViewById(R.id.RegisterActivityBtn);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+                //show how to pass information to another activity
+                startIntent.putExtra("org.mentorsxhools.quicklancher.Something","Hello World");
+                startActivity(startIntent);
+
+            }
+        });
+
     }
 
 

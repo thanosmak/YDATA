@@ -124,8 +124,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="18dp"
                 android:layout_marginTop="40dp"
-                android:background="@color/backgroundColor"
                 android:text="Logout"
+                android:background="@color/backgroundColor"
                 style="?android:attr/borderlessButtonStyle"
                 android:textColor="@color/colorPrimary" />
         </LinearLayout>
