@@ -12,9 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".Activities.HomeActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:theme="@style/AppTheme.login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,12 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WatermeterActivity" />
-        <activity android:name=".LastMovesActivity" />
-        <activity android:name=".BillsActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".WatermeterDetailsActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".Activities.WatermeterActivity" />
+        <activity android:name=".Activities.LastMovesActivity" />
+        <activity android:name=".Activities.BillsActivity" />
+        <activity android:name=".Activities.ProfileActivity" />
+        <activity android:name=".Activities.WatermeterDetailsActivity" />
+        <activity android:name=".Activities.RegisterActivity"></activity>
     </application>
 
 </manifest>

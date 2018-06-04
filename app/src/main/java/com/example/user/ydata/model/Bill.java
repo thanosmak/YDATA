@@ -7,6 +7,11 @@ public class Bill {
     private String paymentDueDate;
     private String remainingAmount;
     private String chargedConsumption;
+    private String liableFullName;
+    private String billingAddress;
+    private String kodYdr;
+    private String watermeterNumber;
+    private String watermeterPin;
     private UsagePeriod usagePeriod;
 
     // Cunstructor
@@ -18,12 +23,22 @@ public class Bill {
                 String paymentDueDate,
                 String remainingAmount,
                 String chargedConsumption,
+                String liableFullName,
+                String billingAddress,
+                String kodYdr,
+                String watermeterNumber,
+                String watermeterPin,
                 UsagePeriod usagePeriod) {
         this.barcode = barcode;
         this.issuedDate = issuedDate;
         this.paymentDueDate = paymentDueDate;
         this.remainingAmount = remainingAmount;
         this.chargedConsumption = chargedConsumption;
+        this.barcode = liableFullName;
+        this.issuedDate = billingAddress;
+        this.paymentDueDate = kodYdr;
+        this.remainingAmount = watermeterNumber;
+        this.chargedConsumption = watermeterPin;
         this.usagePeriod = usagePeriod;
     }
 
@@ -73,6 +88,46 @@ public class Bill {
 
     public void setUsagePeriod(UsagePeriod usagePeriod) {
         this.usagePeriod = usagePeriod;
+    }
+
+    public String getLiableFullName() {
+        return liableFullName;
+    }
+
+    public void setLiableFullName(String liableFullName) {
+        this.liableFullName = liableFullName;
+    }
+
+    public String getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(String billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public String getKodYdr() {
+        return kodYdr;
+    }
+
+    public void setKodYdr(String kodYdr) {
+        this.kodYdr = kodYdr;
+    }
+
+    public String getWatermeterNumber() {
+        return watermeterNumber;
+    }
+
+    public void setWatermeterNumber(String watermeterNumber) {
+        this.watermeterNumber = watermeterNumber;
+    }
+
+    public String getWatermeterPin() {
+        return watermeterPin;
+    }
+
+    public void setWatermeterPin(String watermeterPin) {
+        this.watermeterPin = watermeterPin;
     }
 
     // UsagePeriod class with getters and setters

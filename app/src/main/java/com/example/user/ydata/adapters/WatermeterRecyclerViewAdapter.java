@@ -3,24 +3,19 @@ package com.example.user.ydata.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.user.ydata.WatermeterDetailsActivity;
+import com.example.user.ydata.Activities.WatermeterDetailsActivity;
 import com.example.user.ydata.model.Waterconnection;
 import com.example.user.ydata.R ;
 
-import org.json.JSONObject;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
