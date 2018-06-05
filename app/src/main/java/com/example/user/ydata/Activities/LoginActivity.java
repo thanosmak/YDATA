@@ -36,6 +36,13 @@ public class LoginActivity extends AppCompatActivity {
         login_username = findViewById(R.id.login_mail);
         login_password = findViewById(R.id.login_password);
 
+        // Recieve data
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle != null) {
+            login_username.setText(bundle.getString("email"));
+            login_password.setText(bundle.getString("password"));
+        }
 
         loginButton = findViewById(R.id.login_button);
         loginProgress = findViewById(R.id.login_progress);
@@ -152,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
     private void goToHomeActivity() {
         Bundle bundle = new Bundle();
         bundle.putString("username", username);
-        bundle.putString("password", password);
+        bundle.putString("passwordField", password);
         bundle.putString("baseUrl", baseUrl);
 
         Intent intent = new Intent(this, HomeActivity.class);

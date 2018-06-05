@@ -1,9 +1,12 @@
 package com.example.user.ydata.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,189 +28,113 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
-//    EditText emailBox, passwordBox, passconfBox;
-//    Button registerButton;
-//    EditText loginLink;
-//    String URL = "https://app.ydata.eu/ydatapi/api/security/register";
-//    private RequestQueue requestQueue;
-//    private StringRequest request;
+    EditText emailField, passwordField, passwordConfirmField;
+    CheckBox termsCheckbox;
+    Button registerButton;
+    String URL = "https://app.ydata.eu/ydatapi/api/security/register";
+    private RequestQueue requestQueue;
+    private JsonObjectRequest request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-//        final EditText emailBox = (EditText) findViewById(R.id.emailBox);
-//        final EditText passwordBox = (EditText) findViewById(R.id.passwordBox);
-//        final EditText passconfBox = (EditText) findViewById(R.id.passconfBox);
-//        final Button registerButton = (Button) findViewById(R.id.registerButton);
-//        //final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-//        passwordBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View view, boolean b) {
-//                Pattern PASSWORD_PATTERN
-//                        = Pattern.compile(
-//                        "[a-zA-Z0-9\\!\\@\\#\\$]{8,24}");
-//                String pass = passwordBox.getText().toString();
-//                if (
-//                    //passwordBox.getText().length()<8
-//                        !PASSWORD_PATTERN.matcher(pass).find()
-//                        ) {
-//                    passwordBox.setError("Password must have at least 1 Upercase, 1 lowercase and 1 special character!");
-//                }
-//            }
-//        });
-//
-//        passconfBox.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//
-//                String pass = passwordBox.getText().toString();
-//                String passcon = passconfBox.getText().toString();
-//                if (!passcon.equals(pass)
-//                        ) {
-//                    passconfBox.setError("Password not matching");
-//                }
-//            }
-//        });
-//
-//        //requestQueue = Volley.newRequestQueue(this);
-//        /*
-//        passwordBox.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                String pass = passwordBox.getText().toString();
-//                validatePassword(pass);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        });
-//*/
-//        registerButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                try {
-//                    InsertSV();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//        });
-//
-//    }
-///*
-//    public void validatePassword(String password){
-//        //Pattern upperCase = Pattern.compile("[A-Z]");
-//        //Pattern lowerCase = Pattern.compile("[a-z]");
-//        //Pattern digitCase = Pattern.compile("[0-9]");
-//        //Pattern upperCase = Pattern.compile("[A-Z]");
-//        Pattern PASSWORD_PATTERN
-//                = Pattern.compile(
-//                "[a-zA-Z0-9\\!\\@\\#\\$]{8,24}");
-//        if (!PASSWORD_PATTERN.matcher(password).find()){
-//            passwordBox.setError("Invalid Password");
-//        }
-//    }
-//
-///*/
-//
-//
-//
-//                /*
-//                final String Mail = emailBox.getText().toString();
-//                final String Pass = passwordBox.getText().toString();
-//                final String Passcon = loginLink.getText().toString();
-//                final boolean mobileApp;
-//                if (Pass==Passcon) {
-//                    mobileApp = true;
-//                }
-//                else {
-//                    mobileApp = false;
-//                }
-//                //final Boolean mobileApp = Boolean.parseBoolean(checkmobileApp.getText().toString());
-//                Response.Listener<String> responseListener = new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            JSONObject jsonResponse = new JSONObject(response);
-//                            boolean success = jsonResponse.getBoolean("success");
-//                            if (success){
-//                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-//                                RegisterActivity.this.startActivity(intent);
-//                            }else{
-//                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-//                                builder.setMessage("Register Failed")
-//                                        .setNegativeButton("Retry", null)
-//                                        .create()
-//                                        .show();
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                };
-//
-//                RegisterRequest registerRequest = new RegisterRequest(Mail, Pass, Passcon, mobileApp, responseListener);
-//                RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-//                queue.add(registerRequest);
-//            }*/
-//
-//
-//    private void InsertSV() throws JSONException {
-//        JSONObject obj = new JSONObject();
-//
+        emailField = findViewById(R.id.email);
+        passwordField = findViewById(R.id.password);
+        passwordConfirmField = findViewById(R.id.passwordConfirm);
+        registerButton = findViewById(R.id.registerButton);
+        //final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+
+        passwordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                Pattern PASSWORD_PATTERN
+                        = Pattern.compile(
+                        "[a-zA-Z0-9\\!\\@\\#\\$]{8,24}");
+                String pass = passwordField.getText().toString();
+                if (
+                    //passwordBox.getText().length()<8
+                        !PASSWORD_PATTERN.matcher(pass).find()
+                        ) {
+                    passwordField.setError("Password must have at least 1 Upercase, 1 lowercase and 1 special character!");
+                }
+            }
+        });
+
+        passwordConfirmField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                String pass = passwordConfirmField.getText().toString();
+                String passcon = passwordConfirmField.getText().toString();
+                if (!passcon.equals(pass)
+                        ) {
+                    passwordConfirmField.setError("Password not matching");
+                }
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    InsertSV();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+
+    }
+
+    private void InsertSV() throws JSONException {
+        JSONObject obj = new JSONObject();
+
+        obj.put("email", emailField.getText().toString());
+        obj.put("password", passwordField.getText().toString());
+        obj.put("passwordConfirmation", passwordConfirmField.getText().toString());
 //        obj.put("mobileApp", true);
-//        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, URL, obj,
-//                new Response.Listener<JSONObject>() {
-//                    /**
-//                     * Called when a response is received.
-//                     *
-//                     * @param response
-//                     */
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        Toast.makeText(getApplication(), (CharSequence) response, Toast.LENGTH_SHORT).show();
-//                    }
-///*
-//            //StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Toast.makeText(getApplication(), response, Toast.LENGTH_SHORT).show();
-//
-//            }
-//            */
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(RegisterActivity.this, error + "", Toast.LENGTH_SHORT).show();
-//            }
-//        }) {
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<String, String>();
-//                String Mail = emailBox.getText().toString();
-//                String Pass = passwordBox.getText().toString();
-//                String Passcon = passconfBox.getText().toString();
-//                //String mobileApp = "true";
-//
-//                params.put("email", Mail);
-//                params.put("password", Pass);
-//                params.put("passwordConfirmation", Passcon);
-//                //params.put("mobileApp ", mobileApp );
-//
-//                return params;
-//            }
-//        };
-//        requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(req);
+
+        request = new JsonObjectRequest(Request.Method.POST, URL, obj,
+            new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    Toast.makeText(getApplicationContext(), "Αγαπητέ χρήστη του app.ydata.eu, ο λογαριασμός σας δημιουργήθηκε επιτυχώς στο Σύστημα. Στην διεύθυνση mail που ορίσατε στην διαδικασία εγγραφής, σας έχει αποσταλεί ένα mail με θέμα: \"Ενεργοποίηση λογαριασμού χρήστη\". Μέσα σε αυτό υπάρχει ένας σχετικός σύνδεσμος ( link ) με τίτλο: \"Ενεργοποίηση λογαριασμού\". Επιλέγοντάς τον, ο λογαριασμός σας στο σύστημα θα ενεργοποιηθεί οπότε και θα μπορέσετε να κάνετε login στο σύστημα.", Toast.LENGTH_LONG).show();
+                    goToLoginView();
+                }
+
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    Log.e("register error:", String.valueOf(error));
+                    Toast.makeText(getApplicationContext(), "Κάτι πήγε στραβά. Δοκιμάστε πάλι αργότερα.", Toast.LENGTH_LONG).show();
+                }
+            }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+
+                return params;
+            }
+        };
+
+        requestQueue = Volley.newRequestQueue(RegisterActivity.this);
+        requestQueue.add(request);
+    }
+
+    private void goToLoginView() {
+        Bundle bundle = new Bundle();
+        bundle.putString("email", String.valueOf(emailField));
+        bundle.putString("password", String.valueOf(passwordField));
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }
